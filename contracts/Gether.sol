@@ -7,8 +7,9 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 
-contract MixerToken is ERC1155, Ownable, Pausable, ERC1155Burnable {
+contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 
 
     // start additional code
@@ -53,12 +54,19 @@ contract MixerToken is ERC1155, Ownable, Pausable, ERC1155Burnable {
         _unpause();
     }
 
+    //start modified code
+
     function mint(address account, uint256 id, uint256 amount, bytes memory data)
         public
         onlyOwner
     {
+        
+        deposit(amount);
+
         _mint(account, id, amount, data);
     }
+
+    //end modified code
 
     //start additional code
     function mintIncremental(address _recipient, uint256 amount, bytes memory data)
@@ -111,10 +119,10 @@ contract MixerToken is ERC1155, Ownable, Pausable, ERC1155Burnable {
         _mintBatch(to, ids, amounts, data);
     }
 
+
     function _beforeTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
         internal
-        whenNotPaused
-        override
+        override(ERC1155, ERC1155Supply)
     {
         super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
     }
