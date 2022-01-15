@@ -58,7 +58,6 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 
     function mint(address account, uint256 id, uint256 amount, bytes memory data)
         public
-        onlyOwner
     {
         
         deposit(amount);
@@ -81,7 +80,6 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 
     function mintIncremental(address _recipient, uint256 amount, bytes memory data)
         public
-        onlyOwner
     {
 
         deposit(amount);
