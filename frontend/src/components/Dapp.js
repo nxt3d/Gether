@@ -24,13 +24,14 @@ import { NoTokensMessage } from "./NoTokensMessage";
 import { Mint } from "./Mint";
 import { Burn } from "./Burn";
 
-const tokenContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-const getherContractAddress = "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512";
+//We are currently using USDC as the token
+const tokenContractAddress = "0xe11a86849d99f524cac3e7a0ec1241828e332c62";
+const getherContractAddress = "0x15706Ae9DA5172A8a90c0e11Aa22D4d43282CEed";
 
 // This is the Hardhat Network id, you might change it in the hardhat.config.js
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
 // to use when deploying to other networks.
-const HARDHAT_NETWORK_ID = "31337";
+const HARDHAT_NETWORK_ID = "80001";
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
