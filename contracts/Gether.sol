@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/interfaces/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
+import "./ERC1155.sol";
+import "./Ownable.sol";
+import "./Pausable.sol";
+import "./ERC1155Burnable.sol";
+import "./Counters.sol";
+import "./IERC20.sol";
+import "./ERC1155Supply.sol";
 
 contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 

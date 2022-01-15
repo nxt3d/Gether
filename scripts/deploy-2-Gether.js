@@ -16,7 +16,7 @@ async function main() {
   // We get the contract to deploy
   const Gether = await hre.ethers.getContractFactory("Gether");
   const gether = await Gether.deploy(
-    "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    "0x3dD721E0Eb695AB809e9EE656C8A42247e65cf2c"
   );
 
   await gether.deployed();
