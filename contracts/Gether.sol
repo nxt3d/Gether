@@ -70,7 +70,7 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 
     //start additional code
 
-    function burn(uint256 id, uint256 amount) public 
+    function burnAndWithdraw(uint256 id, uint256 amount) public 
     {
 
         _burn(msg.sender, id , amount);

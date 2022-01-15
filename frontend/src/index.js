@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Dapp } from "./components/Dapp";
 
 // We import bootstrap here, but you can remove if you want
