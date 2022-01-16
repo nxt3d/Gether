@@ -119,8 +119,9 @@ export class Dapp extends React.Component {
           </ul>
 
           <hr />
-          <div></div>
-          <img src="Gether.png" />
+          <div className="text-center">
+            <img src="Gether.png" width={200} />
+          </div>
 
           <div className="container p-4">
             <div className="row">
@@ -196,6 +197,9 @@ export class Dapp extends React.Component {
           you have multiple routes, but you want only one
           of them to render at a time
         */}
+          <div className="text-center">
+            <img src="FreePickDay.png" width={250} />
+          </div>
           <Switch>
             <Route exact path="/">
               <div className="container p-4">
@@ -206,14 +210,9 @@ export class Dapp extends React.Component {
                 </div>
 
                 <hr />
+
                 <div className="row">
                   <div className="col-12">
-                    {/*
-              This component displays a form that the user can use to send a 
-              transaction and transfer some tokens.
-              The component doesn't have logic, it just calls the transferTokens
-              callback.
-            */}
                     {this.state.balance.gt(0) && (
                       <Approve
                         approve={(amount) => this._approveContract(amount)}
@@ -233,34 +232,6 @@ export class Dapp extends React.Component {
                 </div>
 
                 <hr />
-
-                <div className="row">
-                  <div className="col-12">
-                    {/* 
-              Sending a transaction isn't an immidiate action. You have to wait
-              for it to be mined.
-              If we are waiting for one, we show a message here.
-            */}
-                    {this.state.txBeingSent && (
-                      <WaitingForTransactionMessage
-                        txHash={this.state.txBeingSent}
-                      />
-                    )}
-
-                    {/* 
-              Sending a transaction can fail in multiple ways. 
-              If that happened, we show a message here.
-            */}
-                    {this.state.transactionError && (
-                      <TransactionErrorMessage
-                        message={this._getRpcErrorMessage(
-                          this.state.transactionError
-                        )}
-                        dismiss={() => this._dismissTransactionError()}
-                      />
-                    )}
-                  </div>
-                </div>
 
                 <div className="row">
                   <div className="col-12">
@@ -296,56 +267,9 @@ export class Dapp extends React.Component {
 
                 <hr />
 
-                <div className="row">
-                  <div className="col-12">
-                    {/* 
-              Sending a transaction isn't an immidiate action. You have to wait
-              for it to be mined.
-              If we are waiting for one, we show a message here.
-            */}
-                    {this.state.txBeingSent && (
-                      <WaitingForTransactionMessage
-                        txHash={this.state.txBeingSent}
-                      />
-                    )}
-
-                    {/* 
-              Sending a transaction can fail in multiple ways. 
-              If that happened, we show a message here.
-            */}
-                    {this.state.transactionError && (
-                      <TransactionErrorMessage
-                        message={this._getRpcErrorMessage(
-                          this.state.transactionError
-                        )}
-                        dismiss={() => this._dismissTransactionError()}
-                      />
-                    )}
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-12">
-                    {/*
-              If the user has no tokens, we don't show the Tranfer form
-            */}
-                    {this.state.balance.eq(0) && (
-                      <NoTokensMessage
-                        selectedAddress={this.state.selectedAddress}
-                      />
-                    )}
-
-                    {/*
-              This component displays a form that the user can use to send a 
-              transaction and transfer some tokens.
-              The component doesn't have logic, it just calls the transferTokens
-              callback.
-            */}
-                    {this.state.balance.gt(0) && (
-                      <Burn burn={(amount) => this._burn(amount)} />
-                    )}
-                  </div>
-                </div>
+                {this.state.balance.gt(0) && (
+                  <Burn burn={(amount) => this._burn(amount)} />
+                )}
               </div>
             </Route>
           </Switch>
