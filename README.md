@@ -1,7 +1,7 @@
 # Gether -
 
 Gether is deployed to the Polygon Mumbai testnet:
-https://mumbai.polygonscan.com/address/0x2a781796a372dA624bf177b21dc33Db5a1348E00
+https://rinkeby.etherscan.io/address/0xc91cbfbfe4521f926829de136c15f97edf842e9f
 
 For testing there is also a ERC20 token deployed to the testnet TestToken:
-https://mumbai.polygonscan.com/address/0x3dd721e0eb695ab809e9ee656c8a42247e65cf2c
+https://rinkeby.etherscan.io/address/0x72e2ba1ea6f1bc9e27f9b01bfc019a1bd543be8c

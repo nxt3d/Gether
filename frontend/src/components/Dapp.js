@@ -25,13 +25,13 @@ import { Mint } from "./Mint";
 import { Burn } from "./Burn";
 
 //We are currently using USDC as the token
-const tokenContractAddress = "0xe11a86849d99f524cac3e7a0ec1241828e332c62";
-const getherContractAddress = "0x2a781796a372dA624bf177b21dc33Db5a1348E00";
+const tokenContractAddress = "0x4DBCdF9B62e891a7cec5A2568C3F4FAF9E8Abe2b";
+const getherContractAddress = "0xc91cbfbfe4521f926829de136c15f97edf842e9f";
 
 // This is the Hardhat Network id, you might change it in the hardhat.config.js
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
 // to use when deploying to other networks.
-const HARDHAT_NETWORK_ID = "80001";
+const HARDHAT_NETWORK_ID = "4";
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
@@ -357,6 +357,15 @@ export class Dapp extends React.Component {
       GetherArtifact.abi,
       this._provider.getSigner(0)
     );
+
+    const ensName = await this._provider.lookupAddress(
+      this.state.selectedAddress
+    );
+    if (ensName) {
+      this.setState({
+        selectedAddress: ensName,
+      });
+    }
   }
 
   // The next two methods are needed to start and stop polling data. While
