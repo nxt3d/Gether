@@ -3,7 +3,6 @@ pragma solidity ^0.8.2;
 
 import "./ERC1155.sol";
 import "./Ownable.sol";
-import "./Pausable.sol";
 import "./ERC1155Burnable.sol";
 import "./Counters.sol";
 import "./IERC20.sol";
@@ -20,6 +19,9 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 
     // Mapping from token ID to max supplies
     mapping(uint256 => uint256) public maxSupplies;
+
+    // Mapping of owners to ids 
+    mapping(uint256 => address) public controllers;
 
     // end additional code
 
@@ -43,11 +45,43 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
         return _tokenAdd;
     }
     
-    //Set the max supply for any token id 
+    /**
+    * Set the max supply for any token id 
+    */
 
-    function setMaxSupply(uint256 id, uint256 amount) public onlyOwner {
+    function setMaxSupply(uint256 id, uint256 amount) public {
         
-        maxSupplies[id] = amount;
+        if (msg.sender != owner()) { 
+
+            if (msg.sender == controllers[id]){ 
+                maxSupplies[id] = amount;
+            }
+
+        } else {
+
+            maxSupplies[id] = amount;
+
+        }
+
+    }
+
+    /**
+    * Set the owner of an id 
+    */
+    
+    function setController(uint256 id, address controller) public {
+
+        if (msg.sender != owner()) { 
+
+            if (msg.sender == controllers[id]){ 
+                controllers[id] = controller;
+            }
+
+        } else {
+
+            controllers[id] = controller;
+
+        }
 
     }
 
@@ -57,24 +91,39 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
         _setURI(newuri);
     }
 
-    function pause() public onlyOwner {
-        _pause();
-    }
-
-    function unpause() public onlyOwner {
-        _unpause();
-    }
-
     //start modified code
 
     function mint(address account, uint256 id, uint256 amount, bytes memory data)
         public
     {
         require( totalSupply(id) + amount <=  maxSupplies[id]);
-        
-        deposit(amount);
 
-        _mint(account, id, amount, data);
+        if (msg.sender != owner()) { 
+
+            if (msg.sender == controllers[id]){ 
+                
+                deposit(amount);
+
+                _mint(account, id, amount, data);
+
+            }
+
+        } else if ( controllers[id] == address(0)){
+
+            controllers[id] = msg.sender;
+
+            deposit(amount);
+
+            _mint(account, id, amount, data);
+
+        } else {
+
+            deposit(amount);
+
+            _mint(account, id, amount, data);
+
+        }
+        
     }
 
     //end modified code
@@ -83,10 +132,19 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 
     function burnAndWithdraw(uint256 id, uint256 amount) public 
     {
+        require(totalSupply(id) - amount >= 0);
 
-        _burn(msg.sender, id , amount);
+        if (msg.sender != owner()) { 
 
-        _withdraw(payable(msg.sender), amount);
+            if (msg.sender == controllers[id]){ 
+                
+                _burn(msg.sender, id , amount);
+
+                _withdraw(payable(msg.sender), amount);
+
+            }
+
+        } 
 
     }
 
