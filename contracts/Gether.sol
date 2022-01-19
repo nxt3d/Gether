@@ -74,7 +74,7 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 
         _burn(msg.sender, id , amount);
 
-        withdraw(payable(msg.sender), amount);
+        _withdraw(payable(msg.sender), amount);
 
     }
 
@@ -93,7 +93,6 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 
     function deposit(uint256 amount) 
         public 
-        onlyOwner
     {
 
         // Check if transfer passes
@@ -113,6 +112,15 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
         uint256 _value)
         public 
         onlyOwner
+    {
+        _withdraw(_to, _value);
+
+    }
+
+    function _withdraw(
+        address payable _to, 
+        uint256 _value)
+        internal
     {
       IERC20(tokenAddress).transfer(_to, _value);
       require(checkSuccess(), "ImgToken#withdraw: TRANSFER_FAILED");
