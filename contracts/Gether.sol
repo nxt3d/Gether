@@ -8,7 +8,7 @@ import "./Counters.sol";
 import "./IERC20.sol";
 import "./ERC1155Supply.sol";
 
-contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
+contract Gether is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
 
 
     // start additional code
