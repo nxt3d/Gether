@@ -18,6 +18,9 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
+    // Mapping from token ID to max supplies
+    mapping(uint256 => uint256) public maxSupplies;
+
     // end additional code
 
     // constructor was modified
@@ -39,6 +42,14 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 
         return _tokenAdd;
     }
+    
+    //Set the max supply for any token id 
+
+    function setMaxSupply(uint256 id, uint256 amount) public onlyOwner {
+        
+        maxSupplies[id] = amount;
+
+    }
 
     // end additional code
 
@@ -59,6 +70,7 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
     function mint(address account, uint256 id, uint256 amount, bytes memory data)
         public
     {
+        require( totalSupply(id) + amount <=  maxSupplies[id]);
         
         deposit(amount);
 
@@ -77,19 +89,6 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
         _withdraw(payable(msg.sender), amount);
 
     }
-
-    function mintIncremental(address _recipient, uint256 amount, bytes memory data)
-        public
-    {
-
-        deposit(amount);
-
-        _tokenIds.increment();
-        uint256 newTokenId = _tokenIds.current();
-
-        _mint(_recipient, newTokenId, amount, data);
-    }
-
 
     function deposit(uint256 amount) 
         public 
@@ -128,12 +127,21 @@ contract Gether is ERC1155, Ownable, Pausable, ERC1155Burnable, ERC1155Supply {
 
     //end additional code
     
+    //start modified code
+    
     function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
         public
         onlyOwner
     {
+
+        for (uint256 i = 0; i < ids.length; ++i) {
+            require( totalSupply(ids[i]) + amounts[i] <=  maxSupplies[ids[i]]);
+        }
+
         _mintBatch(to, ids, amounts, data);
     }
+    
+    //end modified code
 
 
     function _beforeTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)

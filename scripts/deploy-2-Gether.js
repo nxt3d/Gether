@@ -19,7 +19,7 @@ async function main() {
     "0xe11a86849d99f524cac3e7a0ec1241828e332c62"
   );
 
-  await gether.deployed();
+  //await gether.deployed();
 
   console.log("Gether deployed to:", gether.address);
 }

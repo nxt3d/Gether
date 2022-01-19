@@ -26,7 +26,7 @@ import { Burn } from "./Burn";
 
 //We are currently using USDC as the token
 const tokenContractAddress = "0xe11a86849d99f524cac3e7a0ec1241828e332c62";
-const getherContractAddress = "0x2a781796a372dA624bf177b21dc33Db5a1348E00";
+const getherContractAddress = "0xF348EAe6742e0DEfFaAFB86b3273422A176De31b";
 
 // This is the Hardhat Network id, you might change it in the hardhat.config.js
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
