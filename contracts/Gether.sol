@@ -96,39 +96,38 @@ contract Gether is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     function mint(address account, uint256 id, uint256 amount, bytes memory data)
         public
     {
-        require( totalSupply(id) + amount <=  maxSupplies[id]);
 
-        if (msg.sender != owner()) { 
-
-            if (msg.sender == controllers[id]){ 
+        if (msg.sender == controllers[id]){ 
                 
+                require( totalSupply(id) + amount <=  maxSupplies[id]);
+
                 deposit(amount);
 
                 _mint(account, id, amount, data);
 
-            }
 
-        } else if ( controllers[id] == address(0)){
+        } else if ( controllers[id] == address(0) && totalSupply(id) == 0){
 
             controllers[id] = msg.sender;
 
-            deposit(amount);
-
-            _mint(account, id, amount, data);
-
-        } else {
+            maxSupplies[id] = amount;
 
             deposit(amount);
 
             _mint(account, id, amount, data);
 
-        }
+        } 
+
         
     }
 
     //end modified code
 
     //start additional code
+
+    /**
+    * Controllers can burn tokens and withdraw funds
+    */ 
 
     function burnAndWithdraw(uint256 id, uint256 amount) public 
     {
